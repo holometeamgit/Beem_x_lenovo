@@ -6,6 +6,8 @@
  *
  ******************************************************************************/
 
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -20,7 +22,9 @@ namespace Qualcomm.Snapdragon.Spaces.Samples
         public Text TouchpadYText;
         public InputActionReference TouchpadInputAction;
         public RectTransform TouchpadPositionIndicator;
-
+        
+        //public InputActionReference TriggerAction;
+        
         public void OnButtonPress(string buttonName) {
             ButtonPressText.text = buttonName;
         }
@@ -31,6 +35,7 @@ namespace Qualcomm.Snapdragon.Spaces.Samples
 
         public override void Update() {
             base.Update();
+            
             var touchpadValue = TouchpadInputAction.action.ReadValue<Vector2>();
             TouchpadXText.text = touchpadValue.x.ToString("#0.00");
             TouchpadYText.text = touchpadValue.y.ToString("#0.00");

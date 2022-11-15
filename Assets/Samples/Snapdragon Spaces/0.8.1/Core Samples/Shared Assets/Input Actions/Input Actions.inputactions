@@ -141,6 +141,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TouchpadPressed",
+                    "type": "Value",
+                    "id": "26fb135f-ad03-436a-85e9-08c49bbe3a52",
+                    "expectedControlType": "Touch",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -306,6 +315,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Touchpad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a0599e14-9d07-4681-8a36-50fb448b9e52",
+                    "path": "<XRController>/touchpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchpadPressed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

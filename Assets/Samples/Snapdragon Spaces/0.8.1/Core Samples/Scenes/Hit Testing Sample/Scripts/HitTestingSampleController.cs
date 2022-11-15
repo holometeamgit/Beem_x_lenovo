@@ -6,8 +6,10 @@
  *
  ******************************************************************************/
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.ARFoundation;
 
 namespace Qualcomm.Snapdragon.Spaces.Samples
@@ -24,6 +26,8 @@ namespace Qualcomm.Snapdragon.Spaces.Samples
 
         private Vector3 _desiredPosition;
 
+        public InputActionReference TriggerAction;
+        
         public override void Start() {
             base.Start();
             _raycastManager = FindObjectOfType<ARRaycastManager>();
@@ -38,9 +42,32 @@ namespace Qualcomm.Snapdragon.Spaces.Samples
             _activeIndicator.transform.position = _desiredPosition;
         }
 
+        public override void OnEnable() {
+            base.OnEnable();
+            StartCoroutine(LateOnEnable());
+        }
+        
+        private IEnumerator LateOnEnable() {
+            yield return new WaitForSeconds(0.1f);
+            TriggerAction.action.performed += OnTriggerAction;
+        }
+
+        private void OnTriggerAction(InputAction.CallbackContext obj)
+        {
+            if (HitIndicator.activeSelf)
+            {
+                HitIndicator.GetComponent<VideoPlanePlacement>().Place();
+            }
+        }
+
+        public override void OnDisable() {
+            base.OnDisable();
+            TriggerAction.action.performed -= OnTriggerAction;
+        }
+        
         public void CastRay() {
             Ray ray = new Ray(_cameraTransform.position, _cameraTransform.forward);
-
+            
             List<ARRaycastHit> hitResults = new List<ARRaycastHit>();
             if (_raycastManager.Raycast(ray, hitResults)) {
                 _desiredPosition = hitResults[0].pose.position;
